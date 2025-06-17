@@ -2,7 +2,10 @@
   "name": "playwrightonpowerplatform",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "setup": "npx playwright install",
+    "test": "npx playwright test"
+ },
   "keywords": [],
   "author": "",
   "license": "ISC",

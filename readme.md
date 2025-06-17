@@ -82,3 +82,12 @@ Tests are automatically run in GitHub Actions on push and pull requests to `main
 For more details, see [Playwright documentation](https://playwright.dev/docs/intro).
 
 https://fakerapi.it/api/v2/custom?_quantity=1&customfield1=name&customfield2=dateTime&customfield3=phone&something=longText
+
+```powershell
+$env:APP_URL = "https://techtweedie.crm11.dynamics.com/main.aspx?appid=6653f9fc-b74b-f011-877a-6045bd0e2fc6"
+$env:APP_NAME = "MDA Playwright Testing"
+```
+playwright-test
+
+
+npx playwright codegen https://techtweedie.crm11.dynamics.com/main.aspx?appid=6653f9fc-b74b-f011-877a-6045bd0e2fc6
