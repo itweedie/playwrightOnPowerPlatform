@@ -80,3 +80,5 @@ Tests are automatically run in GitHub Actions on push and pull requests to `main
 ---
 
 For more details, see [Playwright documentation](https://playwright.dev/docs/intro).
+
+https://fakerapi.it/api/v2/custom?_quantity=1&customfield1=name&customfield2=dateTime&customfield3=phone&something=longText
