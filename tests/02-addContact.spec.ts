@@ -1,6 +1,5 @@
 import { test, expect } from '@playwright/test';
 import 'dotenv/config';
-import fetch from 'node-fetch';
 
 // Define the configuration interface and load values from environment variables
 interface Config {
@@ -25,7 +24,8 @@ let fakeData: { firstName: string; lastName: string; email: string };
 
 // Test to verify the application is accessible and displays the correct name
 test('add-contact', async ({ page }) => {
-  // Fetch fake data inside the test
+  // Dynamically import node-fetch for ESM compatibility
+  const fetch = (await import('node-fetch')).default;
   const response = await fetch('https://fakerapi.it/api/v2/custom?_quantity=1&FirstName=firstName&LastName=lastName&Email=email');
   const result = (await response.json()) as { data: Array<{ FirstName: string; LastName: string; Email: string }> };
   const user = result.data[0];
