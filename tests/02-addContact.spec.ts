@@ -19,6 +19,21 @@ const config: Config = {
   tenantId: process.env.O365_TENANT_ID || 'default_tenant_id',
 };
 
+// Place this at the beginning of your test file or test function
+let fakeData: { firstName: string; lastName: string; email: string };
+
+fetch('https://fakerapi.it/api/v2/custom?_quantity=1&FirstName=firstName&LastName=lastName&Email=email')
+  .then(response => response.json())
+  .then(result => {
+    const user = result.data[0];
+    fakeData = {
+      firstName: user.FirstName,
+      lastName: user.LastName,
+      email: user.Email,
+    };
+  })
+  .catch(error => console.error('API call failed:', error));
+
 // Test to verify the application is accessible and displays the correct name
 test('add-contact', async ({ page }) => {
   await page.goto(config.appUrl); // Navigate to the application URL
@@ -35,10 +50,10 @@ test('add-contact', async ({ page }) => {
   await page.getByRole('menuitem', { name: 'New', exact: true }).click();
   await page.getByRole('button', { name: 'dismiss' }).click();
   await page.getByRole('textbox', { name: 'First Name' }).click();
-  await page.getByRole('textbox', { name: 'First Name' }).fill('Chris');
+  await page.getByRole('textbox', { name: 'First Name' }).fill(fakeData.firstName);
   await page.getByRole('textbox', { name: 'First Name' }).press('Tab');
-  await page.getByRole('textbox', { name: 'Last Name' }).fill('Test');
+  await page.getByRole('textbox', { name: 'Last Name' }).fill(fakeData.lastName);
   await page.getByRole('textbox', { name: 'Email', exact: true }).click();
-  await page.getByRole('textbox', { name: 'Email', exact: true }).fill('Chris@test.com');
+  await page.getByRole('textbox', { name: 'Email', exact: true }).fill(fakeData.email);
   await page.getByRole('menuitem', { name: 'Save & Close' }).click();
 });
