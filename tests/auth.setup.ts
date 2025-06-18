@@ -3,7 +3,7 @@ import path from 'path';
 
 import 'dotenv/config';
 
-const authFile = path.join(__dirname, '../.auth/user.json');
+const authFile = path.join(__dirname, '../auth/user.json');
 
 // Define the configuration interface and load values from environment variables
 interface Config {
