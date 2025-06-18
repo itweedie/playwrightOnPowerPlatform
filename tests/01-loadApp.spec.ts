@@ -1,8 +1,6 @@
 import { test, expect } from '@playwright/test';
 import 'dotenv/config';
 
-test.use({ storageState: '.auth/auth.json' }); // Load the saved authentication state
-
 // Define the configuration interface and load values from environment variables
 interface Config {
   appUrl: string; // URL of the application to test
