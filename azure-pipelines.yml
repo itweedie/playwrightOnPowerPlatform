@@ -45,3 +45,7 @@ jobs:
         artifact: playwright-report
         # always create the artifact, this is useful for debugging failed tests
         condition: always()
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFormat: 'JUnit'
+          testResultsFiles: '**/TEST-*.xml'
