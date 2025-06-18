@@ -1,5 +1,9 @@
-import { test, expect } from '@playwright/test';
+import { test as setup, expect } from '@playwright/test';
+import path from 'path';
+
 import 'dotenv/config';
+
+const authFile = path.join(__dirname, '../.auth/user.json');
 
 // Define the configuration interface and load values from environment variables
 interface Config {
@@ -22,7 +26,7 @@ const config: Config = {
 let page; // Declare a variable to hold the browser page instance
 
 // Perform login once before all tests
-test.beforeAll(async ({ browser }) => {
+setup('authenticate', async ({ browser }) => {
   page = await browser.newPage(); // Create a new browser page
   await page.goto('https://portal.office.com/'); // Navigate to the Office 365 login page
 
@@ -50,5 +54,6 @@ test.beforeAll(async ({ browser }) => {
   await page.getByRole('button', { name: 'Yes' }).click();
 
   // Save the authentication state to a file
-  await page.context().storageState({ path: '.auth/auth.json' });
+  await page.context().storageState({ path: authFile });
 });
+
