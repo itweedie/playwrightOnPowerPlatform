@@ -23,18 +23,18 @@ const config: Config = {
 // Place this at the beginning of your test file or test function
 let fakeData: { firstName: string; lastName: string; email: string };
 
-// Use node-fetch for HTTP requests in Node.js
-const response = await fetch('https://fakerapi.it/api/v2/custom?_quantity=1&FirstName=firstName&LastName=lastName&Email=email');
-const result = (await response.json()) as { data: Array<{ FirstName: string; LastName: string; Email: string }> };
-const user = result.data[0];
-fakeData = {
-  firstName: user.FirstName,
-  lastName: user.LastName,
-  email: user.Email,
-};
-
 // Test to verify the application is accessible and displays the correct name
 test('add-contact', async ({ page }) => {
+  // Fetch fake data inside the test
+  const response = await fetch('https://fakerapi.it/api/v2/custom?_quantity=1&FirstName=firstName&LastName=lastName&Email=email');
+  const result = (await response.json()) as { data: Array<{ FirstName: string; LastName: string; Email: string }> };
+  const user = result.data[0];
+  fakeData = {
+    firstName: user.FirstName,
+    lastName: user.LastName,
+    email: user.Email,
+  };
+
   await page.goto(config.appUrl); // Navigate to the application URL
   
   // Wait for a stable element that indicates the page is ready
