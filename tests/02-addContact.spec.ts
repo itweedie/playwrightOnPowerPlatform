@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import 'dotenv/config';
+import fetch from 'node-fetch';
 
 // Define the configuration interface and load values from environment variables
 interface Config {
@@ -22,17 +23,15 @@ const config: Config = {
 // Place this at the beginning of your test file or test function
 let fakeData: { firstName: string; lastName: string; email: string };
 
-fetch('https://fakerapi.it/api/v2/custom?_quantity=1&FirstName=firstName&LastName=lastName&Email=email')
-  .then(response => response.json())
-  .then(result => {
-    const user = result.data[0];
-    fakeData = {
-      firstName: user.FirstName,
-      lastName: user.LastName,
-      email: user.Email,
-    };
-  })
-  .catch(error => console.error('API call failed:', error));
+// Use node-fetch for HTTP requests in Node.js
+const response = await fetch('https://fakerapi.it/api/v2/custom?_quantity=1&FirstName=firstName&LastName=lastName&Email=email');
+const result = (await response.json()) as { data: Array<{ FirstName: string; LastName: string; Email: string }> };
+const user = result.data[0];
+fakeData = {
+  firstName: user.FirstName,
+  lastName: user.LastName,
+  email: user.Email,
+};
 
 // Test to verify the application is accessible and displays the correct name
 test('add-contact', async ({ page }) => {
