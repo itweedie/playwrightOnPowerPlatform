@@ -34,6 +34,12 @@ jobs:
       - script: |
           npx playwright test
         displayName: "Run Playwright tests"
+        env:
+          APP_URL: $(APP_URL)
+          APP_NAME: $(APP_NAME)
+          O365_USERNAME: $(O365_USERNAME)
+          O365_PASSWORD: $(O365_PASSWORD)
+          O365_TENANT_ID: $(O365_TENANT_ID)
  
       - publish: $(System.DefaultWorkingDirectory)/playwright-report
         artifact: playwright-report
